@@ -4,8 +4,7 @@
   "description": "API para servir o client-side do app Grammister",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "nodemon src/index.js"
   },
   "author": "Kauê Cavalcante",
   "license": "ISC",

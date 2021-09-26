@@ -1,5 +1,4 @@
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 const { UserInputError } = require('apollo-server');
 
 const User = require('../../models/User');

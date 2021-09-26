@@ -15,9 +15,10 @@ module.exports = gql`
 
   type Comment {
     id: ID!
-    createdAt: String!
-    username: String!
     body: String!
+    username: String!
+    email: String!
+    createdAt: String!
   }
 
   type Like {
