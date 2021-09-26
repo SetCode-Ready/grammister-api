@@ -35,24 +35,24 @@ module.exports = {
   Mutation: {
 
     async createPost(_, { body }, context) {
-      const user = authValidate(context);
+		const user = authValidate(context);
 
-      if (body.trim() === '') {
-        throw new Error('Post body must not be empty');
-      }
+		if (body.trim() === '') {
+			throw new Error('Post body must not be empty');
+		}
 
-      const newPost = new Post({
-        body,
-        user: user.id,
-        username: user.username,
-        email: user.email,
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
-      });
+		const newPost = new Post({
+			body,
+			user: user.id,
+			username: user.username,
+			email: user.email,
+			createdAt: new Date().toISOString(),
+			updatedAt: new Date().toISOString(),
+		});
 
-      const post = await newPost.save();
+		const post = await newPost.save();
 
-      return post;
+		return post;
     },
 
     async deletePost(_, { postId }, context) {
@@ -77,6 +77,30 @@ module.exports = {
 			throw new Error(err.message);
 		}
     },
+
+	async likePost(_, { postId }, context) {
+		const { username, email } = authValidate(context);
+
+		const post = await Post.findById(postId);
+
+		if (!post) {
+			throw new UserInputError("Post not found");
+		}
+
+		if (post.likes.find(like => like.email === email)) {
+			post.likes = post.likes.filter(like => like.email !== email);
+		} else {
+			post.likes.push({
+				username,
+				email,
+				createdAt: new Date().toISOString(),
+			});
+		}
+
+		await post.save();
+
+		return post;
+	}
 
   },
 };
