@@ -5,12 +5,15 @@ const express = require('express');
 const cors = require('cors');
 const { createServer } = require('http');
 const { ApolloServer } = require('apollo-server-express');
+const { PubSub } = require('graphql-subscriptions');
 const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
 
 const createConnection = require('./database/createConnection');
 
 const typeDefs = require('./graphql/typeDefs');
 const resolvers = require('./graphql/resolvers/index');
+
+const pubsub = new PubSub();
 
 async function startApolloServer() {
     createConnection();
@@ -31,7 +34,7 @@ async function startApolloServer() {
       typeDefs,
       resolvers,
       plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
-      context: ({ req }) => ({ req })
+      context: ({ req }) => ({ req, pubsub })
     });
   
     await server.start();
