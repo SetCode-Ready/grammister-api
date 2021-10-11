@@ -12,6 +12,7 @@ const createConnection = require('./database/createConnection');
 
 const typeDefs = require('./graphql/typeDefs');
 const resolvers = require('./graphql/resolvers/index');
+const { router } = require('./routes');
 
 const pubsub = new PubSub();
 
@@ -27,6 +28,7 @@ async function startApolloServer() {
     app.use(cors(corsOptions));
     app.use(express.json());
     app.use(express.urlencoded({ extended: true }));
+    app.use(router);
 
     const httpServer = createServer(app);
   
