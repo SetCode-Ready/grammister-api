@@ -34,6 +34,17 @@ module.exports = gql`
     token: String!
     name: String!
     createdAt: String!
+    followers: [ID]
+    following: [ID]
+  }
+
+  type UserResponse {
+    id: ID!
+    email: String!
+    name: String!
+    createdAt: String!
+    followers: [ID]
+    following: [ID]
   }
 
   input RegisterInput {
@@ -45,7 +56,8 @@ module.exports = gql`
   }
 
   type Query {
-    findAllUsers: [User]
+    findAllUsers: [UserResponse]
+    findUserById(userId: ID!): UserResponse
     findAllPosts: [Post]
     findPostById(postId: ID!): Post
   }
@@ -53,6 +65,7 @@ module.exports = gql`
   type Mutation {
     register(registerInput: RegisterInput): User!
     login(email: String!, password: String!): User!
+    followUser(userId: ID!): String!
     createPost(body: String!): Post!
     deletePost(postId: ID!): String!
     createComment(postId: String!, body: String!): Post!

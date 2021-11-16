@@ -5,6 +5,7 @@ const User = require('../../models/User');
 const { validateUserRegisterInput } = require('../../validators/validateUserRegisterInput');
 const { validateUserLoginInput } = require('../../validators/validateUserLoginInput');
 const { generateToken } = require('../../utils/generateToken');
+const { authValidate } = require('../../utils/authValidate');
 
 module.exports = {
 
@@ -17,7 +18,21 @@ module.exports = {
             } catch (err) {
                 throw new Error(err);
             }
-        }
+        },
+
+        async findUserById(_, { userId }) {
+			try {
+				const user = await User.findById(userId);
+				
+				if (!user) {
+					throw new Error('User not found');
+				}
+
+				return user;
+			} catch (err) {
+				throw new Error(err);
+			}
+		}
 
     },
 
@@ -94,6 +109,35 @@ module.exports = {
                 id: response._id,
                 token,
             };
+        },
+
+        async followUser(_, { userId }, context) {
+            const user = authValidate(context);
+
+            if (userId.trim() === '') {
+				throw new Error('UserId must not be empty');
+			}
+
+            const currentUser = await User.findById(user.id)
+            const userToFollow = await User.findById(userId);
+
+            if (user.id === userId) {
+                throw new Error("You can't follow yourself!");
+            }
+
+            try {
+                if (!currentUser.following?.includes(userToFollow.id)) {
+                    await currentUser.updateOne({ $push: { following: userToFollow.id } });
+                    await userToFollow.updateOne({ $push: { followers: currentUser.id } });
+                    return "You are following the user!";
+                } else {
+                    await currentUser.updateOne({ $pull: { following: userToFollow.id } });
+                    await userToFollow.updateOne({ $pull: { followers: currentUser.id } });
+                    return "You unfollowed the user."
+                }
+            } catch (err) {
+                throw new Error(err.message);
+            }
         }
     }
 };

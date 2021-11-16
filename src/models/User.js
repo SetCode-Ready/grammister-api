@@ -6,6 +6,14 @@ const userSchema = new Schema({
   birthDate: String,
   password: String,
   gender: String,
+  followers: {
+    type: Array,
+    default: []
+  },
+  following: {
+    type: Array,
+    default: []
+  },
   createdAt: String,
   updatedAt: String,
   avatar: String,
