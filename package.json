@@ -13,13 +13,16 @@
     "axios": "^0.22.0",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "dotenv": "^10.0.0",
     "graphql": "^15.5.1",
     "graphql-subscriptions": "^1.2.1",
     "joi": "^17.4.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.2",
-    "reflect-metadata": "^0.1.13"
+    "nodemailer": "^6.7.1",
+    "reflect-metadata": "^0.1.13",
+    "uuid": "^8.3.2"
   },
   "devDependencies": {
     "nodemon": "^1.19.1"
