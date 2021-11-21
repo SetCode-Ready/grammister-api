@@ -58,6 +58,7 @@ module.exports = gql`
   type Query {
     findAllUsers: [UserResponse]
     findUserById(userId: ID!): UserResponse
+    findUsersByName(userName: String): [UserResponse]
     findAllPosts: [Post]
     findPostById(postId: ID!): Post
   }

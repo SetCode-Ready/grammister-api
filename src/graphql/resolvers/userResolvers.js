@@ -32,7 +32,19 @@ module.exports = {
 			} catch (err) {
 				throw new Error(err);
 			}
-		}
+		},
+
+        async findUsersByName(_, { userName }) {
+			try {
+				const users = await User.find();
+
+                const usersFiltered = users.filter(user => user.name.includes(userName));
+
+				return usersFiltered;
+			} catch (err) {
+				throw new Error(err);
+			}
+		},
 
     },
 
