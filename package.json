@@ -19,8 +19,10 @@
     "graphql-subscriptions": "^1.2.1",
     "joi": "^17.4.2",
     "jsonwebtoken": "^8.5.1",
+    "lastfmapi": "^0.1.1",
     "mongoose": "^6.0.2",
     "nodemailer": "^6.7.1",
+    "path": "^0.12.7",
     "reflect-metadata": "^0.1.13",
     "uuid": "^8.3.2"
   },

@@ -1,4 +1,3 @@
-const { v4: uuid } = require('uuid');
 const crypto = require('crypto');
 
 const User = require('../../models/User');
@@ -12,7 +11,6 @@ const sendResetPasswordEmail = async (request, response) => {
     const user = await User.findOne({ email: userEmail});
 
     if (user) {
-        const id = uuid();
         const userId = user._id;
         const subject = "Reset password instructions";
         

@@ -40,9 +40,9 @@ async function startApolloServer() {
     });
   
     await server.start();
-    server.applyMiddleware({
-		app,
-		path: '/graphql'
+      server.applyMiddleware({
+      app,
+      path: '/graphql'
     });
   
     await new Promise(resolve => httpServer.listen({ port: process.env.PORT }, resolve));
